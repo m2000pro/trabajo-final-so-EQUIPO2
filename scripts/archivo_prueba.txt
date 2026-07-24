@@ -1,0 +1,2 @@
+Mantener este archivo abierto para las primeras pruebas de nice, renice y
+kill

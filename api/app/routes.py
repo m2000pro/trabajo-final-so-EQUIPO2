@@ -2,7 +2,7 @@ import hashlib
 import math
 import time
 
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, render_template
 from sqlalchemy import text
 from werkzeug.exceptions import BadRequest, NotFound
 
@@ -12,6 +12,9 @@ from .models import ComponentType, HardwareComponent, Specification
 
 api_bp = Blueprint("api", __name__)
 
+@api_bp.route("/dashboard")
+def dashboard():
+	return render_template("dashboard.html")
 
 def obtener_json():
     datos = request.get_json(silent=True)

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Monitor de API de Hardware</title>
+
+    <link
+        rel="stylesheet"
+        href="/static/dashboard.css"
+    >
+</head>
+
+<body>
+    <header class="encabezado">
+        <div>
+            <h1>Monitor de API de Hardware</h1>
+
+            <p>
+                Estado, inventario y pruebas de rendimiento
+            </p>
+        </div>
+
+        <div
+            id="estado-api"
+            class="estado estado-cargando"
+        >
+            Comprobando API...
+        </div>
+    </header>
+
+    <main class="contenedor">
+
+        <section class="tarjetas">
+
+            <article class="tarjeta">
+                <h2>Estado de la API</h2>
+
+                <p
+                    id="texto-api"
+                    class="valor"
+                >
+                    Consultando...
+                </p>
+            </article>
+
+            <article class="tarjeta">
+                <h2>Base de datos</h2>
+
+                <p
+                    id="texto-db"
+                    class="valor"
+                >
+                    Consultando...
+                </p>
+            </article>
+
+            <article class="tarjeta">
+                <h2>Componentes</h2>
+
+                <p
+                    id="cantidad-componentes"
+                    class="valor"
+                >
+                    0
+                </p>
+            </article>
+
+            <article class="tarjeta">
+                <h2>Latencia de health</h2>
+
+                <p
+                    id="latencia-health"
+                    class="valor"
+                >
+                    -- ms
+                </p>
+            </article>
+
+        </section>
+
+        <section class="panel">
+            <div class="titulo-panel">
+                <div>
+                    <h2>Inventario registrado</h2>
+
+                    <p>
+                        Información obtenida desde
+                        <code>/api/components</code>
+                    </p>
+                </div>
+
+                <button
+                    id="boton-recargar"
+                    type="button"
+                >
+                    Recargar
+                </button>
+            </div>
+
+            <div class="tabla-contenedor">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Fabricante</th>
+                            <th>Tipo</th>
+                            <th>Consumo</th>
+                            <th>Año</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tabla-componentes">
+                        <tr>
+                            <td colspan="6">
+                                Cargando información...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>Benchmark de CPU</h2>
+
+            <p>
+                Ejecuta una carga controlada dentro del
+                contenedor de la API.
+            </p>
+
+            <div class="controles-benchmark">
+                <label for="iteraciones">
+                    Iteraciones
+                </label>
+
+                <select id="iteraciones">
+                    <option value="100000">
+                        100 000 — ligera
+                    </option>
+
+                    <option value="500000">
+                        500 000 — media
+                    </option>
+
+                    <option value="1000000">
+                        1 000 000 — alta
+                    </option>
+
+                    <option value="1500000">
+                        1 500 000 — intensa
+                    </option>
+                </select>
+
+                <button
+                    id="boton-benchmark"
+                    type="button"
+                >
+                    Ejecutar benchmark
+                </button>
+            </div>
+
+            <div
+                id="resultado-benchmark"
+                class="resultado"
+            >
+                Todavía no se ha ejecutado ninguna prueba.
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>Registro de actividad</h2>
+
+            <div
+                id="registro"
+                class="registro"
+            >
+                Dashboard iniciado.
+            </div>
+        </section>
+
+    </main>
+
+    <script src="/static/dashboard.js"></script>
+</body>
+</html>
+
+

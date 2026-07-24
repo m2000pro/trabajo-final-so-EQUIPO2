@@ -1,20 +1,24 @@
-# 1. Usar una imagen base de Python ligera (ideal para ahorrar recursos)
-FROM python:3.9-slim
+FROM python:3.12-slim
 
-# 2. Establecer el directorio de trabajo dentro del contenedor
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
 WORKDIR /app
 
-# 3. Copiar el archivo de dependencias al contenedor
+RUN addgroup --system appgroup \
+    && adduser --system --ingroup appgroup appuser
+
 COPY requirements.txt .
 
-# 4. Instalar Flask sin guardar archivos temporales (mantiene la imagen pequeña)
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --upgrade pip \
+    && pip install --no-cache-dir -r requirements.txt
 
-# 5. Copiar tu código fuente (app.py) dentro del contenedor
-COPY app.py .
+COPY . .
 
-# 6. Exponer el puerto 8080, tal como lo pide la guía del trabajo
+RUN chown -R appuser:appgroup /app
+
+USER appuser
+
 EXPOSE 8080
 
-# 7. El comando que se ejecutará al encender el contenedor
-CMD ["python", "app.py"]
+CMD ["gunicorn", "--preload", "--bind", "0.0.0.0:8080", "--workers", "2", "--threads", "2", "--timeout", "30", "run:app"]

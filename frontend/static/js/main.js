@@ -1,5 +1,5 @@
 // Configuración de la API (Apunta a tu Máquina Virtual)
-const API_BASE = "http://192.168.18.88";
+const API_BASE = "http://192.168.18.88:8080";
 
 const consoleOut = document.getElementById('console-output');
 const statusBadge = document.getElementById('status-badge');

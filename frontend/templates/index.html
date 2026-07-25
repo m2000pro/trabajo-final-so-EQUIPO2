@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hardware API Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Monitor y Registro de Hardware</h1>
+            <div id="status-badge" class="badge">Comprobando API...</div>
+        </header>
+
+        <main class="grid-layout">
+            <!-- Sección 1: Monitoreo y Salud -->
+            <section class="card">
+                <h2>Estado del Sistema (Endpoints Base)</h2>
+                <div class="button-group">
+                    <button onclick="checkHealth()">Verificar Base de Datos (/health)</button>
+                    <button onclick="runBenchmark()">Estresar CPU (Benchmark)</button>
+                </div>
+                <pre id="console-output">Esperando acciones...</pre>
+            </section>
+
+            <!-- Sección 2: Gestión de Tipos -->
+            <section class="card">
+                <h2>Crear Tipo de Componente</h2>
+                <!-- El tag form garantiza la correcta captura del DOM -->
+                <form id="form-tipo">
+                    <input type="text" name="name" placeholder="Nombre (ej. Procesador)" required>
+                    <input type="text" name="description" placeholder="Descripción">
+                    <button type="submit">Registrar Tipo</button>
+                </form>
+                <button onclick="loadTypes()" class="secondary">Cargar Tipos</button>
+                <ul id="list-tipos" class="data-list"></ul>
+            </section>
+
+            <!-- Sección 3: Gestión de Componentes -->
+            <section class="card">
+                <h2>Registrar Hardware</h2>
+                <form id="form-componente">
+                    <input type="text" name="name" placeholder="Nombre (ej. Ryzen 7)" required>
+                    <input type="text" name="manufacturer" placeholder="Fabricante (ej. AMD)" required>
+                    <input type="text" name="model" placeholder="Modelo (ej. 8700G)" required>
+                    <input type="number" name="component_type_id" placeholder="ID del Tipo" required>
+                    <button type="submit">Crear Componente</button>
+                </form>
+                <button onclick="loadComponents()" class="secondary">Ver Componentes</button>
+                <ul id="list-componentes" class="data-list"></ul>
+            </section>
+            
+            <!-- Sección 4: Especificaciones y Borrado -->
+            <section class="card">
+                <h2>Gestión Avanzada (Modificar/Borrar)</h2>
+                <form id="form-especificacion">
+                    <input type="number" name="component_id" placeholder="ID Componente" required>
+                    <input type="text" name="attribute_name" placeholder="Atributo (ej. Frecuencia)" required>
+                    <input type="text" name="attribute_value" placeholder="Valor (ej. 4.2)" required>
+                    <button type="submit">Añadir Especificación</button>
+                </form>
+                <form id="form-delete">
+                    <input type="number" name="delete_id" placeholder="ID Componente a borrar" required>
+                    <button type="submit" class="danger">Eliminar Componente</button>
+                </form>
+            </section>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

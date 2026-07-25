@@ -1,0 +1,15 @@
+#No copiar en la terminal las líneas que inician con "#". 
+#ADVERTENCIA DE SEGURIDAD: No realizar la configuración con usuario root 
+#directamente, en su lugar utilizar un usuario que pertenezca al grupo sudo y
+#utilizar el prefijo sudo para las configuraciones. 
+
+#==Reglas iniciales de firewall:===
+
+#habilitación de puerto 22 para el uso de SSH:
+sudo ufw allow ssh
+
+#habilitación del puerto 80 para que el Docker (y la API) se comunique con el exterior:
+sudo ufw allow 80/tcp
+
+#activar el firewall:
+sudo ufw enable

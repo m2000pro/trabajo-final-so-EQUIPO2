@@ -1,0 +1,46 @@
+# ==============================================================================
+# GESTIÓN DE USUARIOS, GRUPOS Y PERMISOS DEL SISTEMA DE ARCHIVOS
+# Objetivo: Implementar aislamiento de cargas de trabajo y control de acceso.
+# ==============================================================================
+
+# 1. Creación del usuario operativo (Cumplimiento de Actividad 7).
+sudo adduser operador
+
+# 2. Otorgamiento de privilegios administrativos al usuario operativo.
+# Justificación: Permite administrar el sistema sin usar root directamente.
+sudo usermod -aG sudo operador
+
+# 3. Creación de un grupo colaborativo para el desarrollo.
+sudo groupadd equipo_dev
+
+# 4. Asignación del usuario 'operador' al grupo de desarrollo.
+sudo usermod -aG equipo_dev operador
+
+# ==============================================================================
+# GESTIÓN DE USUARIOS, GRUPOS Y PERMISOS DEL SISTEMA DE ARCHIVOS
+# Objetivo: Implementar aislamiento de cargas de trabajo y control de acceso 
+# seguro para un entorno colaborativo sin dependencia de root.
+# ==============================================================================
+
+# 1. Creación de un grupo colaborativo unificado.
+# Justificación: Agrupar a los usuarios del sistema permite gestionar permisos 
+# sobre los directorios de forma centralizada.
+sudo groupadd equipo_proyecto
+
+# 2. Asignación de los usuarios principales al grupo de trabajo.
+sudo usermod -aG equipo_proyecto adminlinux
+sudo usermod -aG equipo_proyecto operador
+
+# 3. Asignación de propietario y grupo al directorio de montaje.
+# Justificación: Se retira la propiedad a 'root'. Define al usuario principal 
+# (adminlinux) como dueño y al grupo colaborativo (equipo_proyecto) como 
+# administrador del entorno de pruebas.
+sudo chown -R adminlinux:equipo_proyecto /laboratorio
+
+# 4. Implementación del bit SGID (Set-Group-ID) y permisos estructurales.
+# Justificación: El permiso 2775 aplica el bit SGID (el '2' inicial), lo que 
+# fuerza a que cualquier archivo clonado o creado por un usuario herede 
+# automáticamente el grupo 'equipo_proyecto'. Esto elimina la necesidad de 
+# usar 'sudo' para operar Git o crear scripts, respetando el principio 
+# de menor privilegio.
+sudo chmod -R 2775 /laboratorio

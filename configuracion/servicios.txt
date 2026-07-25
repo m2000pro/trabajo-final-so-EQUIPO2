@@ -1,0 +1,24 @@
+# ==============================================================================
+# HARDENING: DESHABILITACIÓN DE SERVICIOS INNECESARIOS
+# Objetivo: Reducir la superficie de ataque y liberar recursos (CPU/RAM).
+# ==============================================================================
+
+# 1. Deshabilitar el gestor de módems (ModemManager).
+# Justificación: El entorno se ejecuta sobre una máquina virtual de red puente; 
+# no existe hardware de banda ancha móvil (4G/5G) físico conectado.
+sudo systemctl disable --now ModemManager.service
+
+# 2. Deshabilitar la gestión de múltiples rutas de almacenamiento (Multipathd).
+# Justificación: La arquitectura utiliza discos virtuales locales (LVM y ext4). 
+# No se interactúa con arreglos de almacenamiento empresarial SAN.
+sudo systemctl disable --now multipathd.service multipathd.socket
+
+# 3. Deshabilitar conexiones de discos en red (Open-iSCSI).
+# Justificación: No se requiere montar particiones a través de la red (iSCSI), 
+# lo que elimina un vector de ataque innecesario.
+sudo systemctl disable --now open-iscsi.service iscsid.socket
+
+# 4. Deshabilitar el instalador de contenedores LXD.
+# Justificación: La plataforma utilizará Docker como motor principal de 
+# contenerización. Se deshabilita LXD para evitar conflictos de sockets.
+sudo systemctl disable --now lxd-installer.socket
